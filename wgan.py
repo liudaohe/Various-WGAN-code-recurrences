@@ -37,7 +37,6 @@ def train(args):
     训练参数:
     ├── 模型参数:
     │   ├──c: {c}
-    │   └── betas: {betas}
     ├── 训练配置:
     │   ├── n_critic: {n_critic}
     │   ├── batch_size: {batch_size}

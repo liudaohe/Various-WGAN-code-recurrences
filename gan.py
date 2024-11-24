@@ -35,7 +35,7 @@ def train(args):
     初始化训练...
     训练参数:
     ├── 模型参数:
-    │   └── betas: {betas}
+    │   └── momentum: {momentum}
     ├── 训练配置:
     │   ├── n_critic: {n_critic}
     │   ├── batch_size: {batch_size}
