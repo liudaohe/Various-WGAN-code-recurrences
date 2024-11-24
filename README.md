@@ -9,10 +9,10 @@
 
 ## 项目结构
 
+text
 model/ # 模型定义
 ├── Discriminator.py # 判别器架构
 └── Generator.py # 生成器架构
-
 gan.py # 原始GAN训练
 wgan.py # WGAN训练
 wgan_gp.py # WGAN-GP训练
