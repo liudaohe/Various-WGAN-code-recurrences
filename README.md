@@ -25,24 +25,9 @@ requirements.txt # 项目依赖
 ```
 pip install -r requirements.txt
 ```
-## 训练参数配置
-
-### 基础参数
-
-| 参数名 | 类型 | 默认值 | 说明 |
-|--------|------|--------|------|
-| output-dir | str | "/" | 结果保存目录 |
-| data-dir | str | "/data" | 数据集目录 |
-| num-iterations | int | 100000 | 训练迭代次数 |
-| n-critic | int | 5 | 判别器训练次数 |
-| batch-size | int | 64 | 批次大小 |
-| checkpoint-interval | int | 300 | 检查点保存间隔 |
-| device | str | "cuda" | 训练设备 |
-| G | str | "" | 生成器检查点路径 |
-| D | str | "" | 判别器检查点路径 |
-| num_workers | int | 2 | 数据加载线程数 |
 
 ## 训练参数配置
+参数默认遵循各论文原文推荐（如果原文指定了的），可更改：（--参数名 值）
 
 ### 基础参数（所有GAN通用）
 
@@ -92,10 +77,16 @@ pip install -r requirements.txt
 ## 运行
 
 ```
-python wgan_div
+python 运行类型.py
 ```
 
-## 判别器(Discriminator)，WGAN系列中称为（Critic）结构
+## 网络结构
+
+由于一开始主要是WGAN-DIV复现，所以网络基本机构遵循WGAN-DIV论文中的推荐结构
+
+注意：WGAN-GP不使用BN，GAN在D里面加入了sigmoid
+
+### 判别器(Discriminator)，WGAN系列中称为（Critic）结构
 ```
 Input (3×64×64)
     ↓
@@ -124,7 +115,7 @@ Linear(512×4×4 → 1)
 Output (1)
 ```
 
-## 生成器(Generator)结构
+### 生成器(Generator)结构
 ```
 Input (z_dim=128)
     ↓
