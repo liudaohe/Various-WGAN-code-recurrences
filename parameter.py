@@ -46,12 +46,11 @@ def get_paras(gan_type):
         },
         "wgan": {
             "lr": (0.0001, None),
-            "betas": ([0.5, 0.999], None),
             "c": (0.01, None)
         },
         "gan": {
             "lr": (0.0002, None),
-            "betas": ([0.5, 0.999], None)
+            "momentum": (0.9, None)
         }
     }
 
