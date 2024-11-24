@@ -42,32 +42,48 @@ pip install -r requirements.txt
 | D | str | "" | 判别器检查点路径 |
 | num_workers | int | 2 | 数据加载线程数 |
 
+## 训练参数配置
+
+### 基础参数（所有GAN通用）
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| output-dir | str | "/" | 结果保存目录 |
+| data-dir | str | "/data" | 数据集目录 |
+| num-iterations | int | 100000 | 训练迭代次数 |
+| n-critic | int | 5 | 判别器训练次数 |
+| batch-size | int | 64 | 批次大小 |
+| checkpoint-interval | int | 300 | 检查点保存间隔 |
+| device | str | "cuda" | 训练设备 |
+| G | str | "" | 生成器检查点路径 |
+| D | str | "" | 判别器检查点路径 |
+| num_workers | int | 2 | 数据加载线程数 |
+
 ### GAN特定参数
 
 #### 原始GAN
 | 参数名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | lr | float | 0.0002 | 学习率 |
-| betas | float[2] | [0.5, 0.999] | Adam优化器参数 |
+| momentum | float | 0.9 | SGD动量系数 |
 
 #### WGAN
 | 参数名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
-| lr | float | 0.0001 | 学习率 |
-| betas | float[2] | [0.5, 0.999] | Adam优化器参数 |
+| lr | float | 0.00005 | RMSprop学习率 |
 | c | float | 0.01 | 权重裁剪参数 |
 
 #### WGAN-GP
 | 参数名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
-| lr | float | 0.0001 | 学习率 |
+| lr | float | 0.0001 | Adam学习率 |
 | betas | float[2] | [0.5, 0.9] | Adam优化器参数 |
 | k | float | 10.0 | 梯度惩罚系数 |
 
 #### WGAN-DIV
 | 参数名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
-| lr | float | 0.0002 | 学习率 |
+| lr | float | 0.0002 | Adam学习率 |
 | betas | float[2] | [0.5, 0.999] | Adam优化器参数 |
 | k | float | 2.0 | WGAN-div的k参数 |
 | p | float | 6.0 | WGAN-div的p参数 |
