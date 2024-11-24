@@ -1,0 +1,8 @@
+torch>=1.8.0
+torchvision>=0.9.0
+numpy>=1.19.0
+scipy>=1.6.0
+matplotlib>=3.3.0
+tqdm>=4.60.0
+pytorch-fid>=0.3.0
+pillow>=8.0.0
