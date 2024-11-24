@@ -18,9 +18,9 @@ from model.Generator import Generator
 
 
 def train(args):
-    n_critic, batch_size, lr, num_iterations, device, betas, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR,momentum = \
+    n_critic, batch_size, lr, num_iterations, device, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR,momentum = \
         args.n_critic, args.batch_size, args.lr, args.num_iterations, args.device, \
-        args.betas, args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir,args.momentum
+        args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir,args.momentum
 
     dataloader = utils.load_data(batch_size, num_workers)
 
