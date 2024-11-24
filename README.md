@@ -1,92 +1,93 @@
 # Various WGAN Implementations
 
-本仓库包含了多种WGAN（Wasserstein GAN）变体的PyTorch实现，包括：
+This repository contains PyTorch implementations of various WGAN (Wasserstein GAN) variants, including:
 
-- 原始GAN
+- Original GAN
 - WGAN (Wasserstein GAN)
 - WGAN-GP (WGAN with Gradient Penalty)
 - WGAN-DIV (WGAN with Divergence)
 
-## 项目结构
+It should be noted that the original WGAN-GP paper processes each sample individually rather than in batches, but the official code seems to use batch processing, which may result in a training speed difference of about 10 times. This project uses the original individual processing, which is about 10 times slower than the other three.
+
+## Project Structure
 
 ```text
-model/ # 模型定义
-├── Discriminator.py # 判别器架构
-└── Generator.py # 生成器架构
-gan.py # 原始GAN训练
-wgan.py # WGAN训练
-wgan_gp.py # WGAN-GP训练
-wgan_div.py # WGAN-DIV训练
-utils.py # 工具函数
-parameter.py # 参数配置
-requirements.txt # 项目依赖
+model/ # Model definitions
+├── Discriminator.py # Discriminator architecture
+└── Generator.py # Generator architecture
+gan.py # Original GAN training
+wgan.py # WGAN training
+wgan_gp.py # WGAN-GP training
+wgan_div.py # WGAN-DIV training
+utils.py # Utility functions
+parameter.py # Parameter configuration
+requirements.txt # Project dependencies
 ```
-## 环境要求
+## Environment Requirements
 ```
 pip install -r requirements.txt
 ```
 
-## 训练参数配置
-参数默认遵循各论文原文推荐（如果原文指定了的），可更改：（--参数名 值）
+## Training Parameter Configuration
+Parameters default to the recommendations in the original papers (if specified), and can be changed: (--parameter_name value)
 
-### 基础参数（所有GAN通用）
+### Basic Parameters (Common to all GANs)
 
-| 参数名 | 类型 | 默认值 | 说明 |
+| Parameter Name | Type | Default Value | Description |
 |--------|------|--------|------|
-| output-dir | str | "/" | 结果保存目录 |
-| data-dir | str | "/data" | 数据集目录 |
-| num-iterations | int | 100000 | 训练迭代次数 |
-| n-critic | int | 5 | 判别器训练次数 |
-| batch-size | int | 64 | 批次大小 |
-| checkpoint-interval | int | 300 | 检查点保存间隔 |
-| device | str | "cuda" | 训练设备 |
-| G | str | "" | 生成器检查点路径 |
-| D | str | "" | 判别器检查点路径 |
-| num_workers | int | 2 | 数据加载线程数 |
+| output-dir | str | "/" | Directory to save results |
+| data-dir | str | "/data" | Dataset directory |
+| num-iterations | int | 100000 | Number of training iterations |
+| n-critic | int | 5 | Number of discriminator training iterations |
+| batch-size | int | 64 | Batch size |
+| checkpoint-interval | int | 300 | Checkpoint save interval |
+| device | str | "cuda" | Training device |
+| G | str | "" | Generator checkpoint path |
+| D | str | "" | Discriminator checkpoint path |
+| num_workers | int | 2 | Number of data loading threads |
 
-### GAN特定参数
+### GAN Specific Parameters
 
-#### 原始GAN
-| 参数名 | 类型 | 默认值 | 说明 |
+#### Original GAN
+| Parameter Name | Type | Default Value | Description |
 |--------|------|--------|------|
-| lr | float | 0.0002 | 学习率 |
-| momentum | float | 0.9 | SGD动量系数 |
+| lr | float | 0.0002 | Learning rate |
+| momentum | float | 0.9 | SGD momentum coefficient |
 
 #### WGAN
-| 参数名 | 类型 | 默认值 | 说明 |
+| Parameter Name | Type | Default Value | Description |
 |--------|------|--------|------|
-| lr | float | 0.00005 | RMSprop学习率 |
-| c | float | 0.01 | 权重裁剪参数 |
+| lr | float | 0.00005 | RMSprop learning rate |
+| c | float | 0.01 | Weight clipping parameter |
 
 #### WGAN-GP
-| 参数名 | 类型 | 默认值 | 说明 |
+| Parameter Name | Type | Default Value | Description |
 |--------|------|--------|------|
-| lr | float | 0.0001 | Adam学习率 |
-| betas | float[2] | [0.5, 0.9] | Adam优化器参数 |
-| k | float | 10.0 | 梯度惩罚系数 |
+| lr | float | 0.0001 | Adam learning rate |
+| betas | float[2] | [0.5, 0.9] | Adam optimizer parameters |
+| k | float | 10.0 | Gradient penalty coefficient |
 
 #### WGAN-DIV
-| 参数名 | 类型 | 默认值 | 说明 |
+| Parameter Name | Type | Default Value | Description |
 |--------|------|--------|------|
-| lr | float | 0.0002 | Adam学习率 |
-| betas | float[2] | [0.5, 0.999] | Adam优化器参数 |
-| k | float | 2.0 | WGAN-div的k参数 |
-| p | float | 6.0 | WGAN-div的p参数 |
+| lr | float | 0.0002 | Adam learning rate |
+| betas | float[2] | [0.5, 0.999] | Adam optimizer parameters |
+| k | float | 2.0 | WGAN-div k parameter |
+| p | float | 6.0 | WGAN-div p parameter |
 
-
-## 运行
+## Running
 
 ```
-python 运行类型.py
+python type.py
 ```
 
-## 网络结构
+## Network Structure
 
-由于一开始主要是WGAN-DIV复现，所以网络基本机构遵循WGAN-DIV论文中的推荐结构
+Since the initial focus was on reproducing WGAN-DIV, the basic network structure follows the recommended structure in the WGAN-DIV paper.
 
-注意：WGAN-GP不使用BN，GAN在D里面加入了sigmoid
+Note: WGAN-GP does not use BN, and GAN adds sigmoid in D.
 
-### 判别器(Discriminator)，WGAN系列中称为（Critic）结构
+### Discriminator (Critic) Structure
 ```
 Input (3×64×64)
     ↓
@@ -115,7 +116,7 @@ Linear(512×4×4 → 1)
 Output (1)
 ```
 
-### 生成器(Generator)结构
+### Generator Structure
 ```
 Input (z_dim=128)
     ↓
@@ -158,20 +159,20 @@ Output (3×64×64)
 
 
 
-## 参考文献
+## References
 
 - [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
   - Goodfellow, I., et al. (2014)
-  - 原始GAN论文
+  - Original GAN paper
 
 - [Wasserstein GAN](https://arxiv.org/abs/1701.07875)
   - Arjovsky, M., et al. (2017)
-  - 提出了Wasserstein距离作为GAN的损失函数
+  - Proposed Wasserstein distance as the loss function for GANs
 
 - [Improved Training of Wasserstein GANs](https://arxiv.org/abs/1704.00028)
   - Gulrajani, I., et al. (2017)
-  - 提出了梯度惩罚（GP）来改进WGAN训练
+  - Proposed gradient penalty (GP) to improve WGAN training
 
 - [Wasserstein Divergence for GANs](https://arxiv.org/abs/1712.01026)
   - Wu, J., et al. (2017)
-  - 提出了WGAN-DIV，使用Wasserstein散度
+  - Proposed WGAN-DIV using Wasserstein divergence
