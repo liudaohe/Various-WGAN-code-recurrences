@@ -1,15 +1,3 @@
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torchvision.utils as vutils
-from torch.utils.data import DataLoader
-import numpy as np
-from tqdm import tqdm
-import os
-from datetime import datetime
-
-
-
 import utils
 from utils import compute_fid_and_save_samples
 from parameter import get_paras
@@ -19,9 +7,9 @@ from model.Generator import Generator
 
 
 def train(args):
-    n_critic, batch_size, lr, num_iterations, device, betas, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR ,c= \
+    n_critic, batch_size, lr, num_iterations, device, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR ,c= \
         args.n_critic, args.batch_size, args.lr, args.num_iterations, args.device, \
-        args.betas, args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir , args.c
+        args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir , args.c
     
     dataloader = utils.load_data(batch_size,num_workers)
 
@@ -65,6 +53,7 @@ def train(args):
         lr=lr,
         alpha=0.99,
         eps=1e-8,
+        momentum=0,
         weight_decay=0
     )
 
@@ -73,6 +62,7 @@ def train(args):
         lr=lr,
         alpha=0.99,
         eps=1e-8,
+        momentum=0,
         weight_decay=0
     )
 
