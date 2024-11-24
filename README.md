@@ -22,5 +22,6 @@ parameter.py # 参数配置
 requirements.txt # 项目依赖
 
 ## 环境要求
-bash
+\bash
 pip install -r requirements.txt
+\
