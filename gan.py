@@ -18,9 +18,9 @@ from model.Generator import Generator
 
 
 def train(args):
-    n_critic, batch_size, lr, num_iterations, device, betas, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR = \
+    n_critic, batch_size, lr, num_iterations, device, betas, checkpoint_interval, num_workers,OUTPUT_DIR, DATA_DIR,momentum = \
         args.n_critic, args.batch_size, args.lr, args.num_iterations, args.device, \
-        args.betas, args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir
+        args.betas, args.checkpoint_interval, args.num_workers, args.output_dir, args.data_dir,args.momentum
 
     dataloader = utils.load_data(batch_size, num_workers)
 
@@ -57,8 +57,20 @@ def train(args):
     os.makedirs(samples_dir, exist_ok=True)
     print(f"结果将保存到: {save_dir}")
 
-    optimizerG = optim.Adam(G.parameters(), lr=lr, betas=betas)
-    optimizerD = optim.Adam(D.parameters(), lr=lr, betas=betas)
+    # 使用SGD优化器，带动量
+    optimizerD = optim.SGD(
+        D.parameters(),
+        lr=lr,  # 学习率
+        momentum=momentum,  # 动量系数，通常设为0.9
+        nesterov=False  # 是否使用Nesterov动量
+    )
+
+    optimizerG = optim.SGD(
+        G.parameters(),
+        lr=lr,
+        momentum=momentum,
+        nesterov=False
+    )
 
     # 创建真实图像目录用于FID计算
     real_temp_dir = '/image/real'
