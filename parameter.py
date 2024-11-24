@@ -45,7 +45,7 @@ def get_paras(gan_type):
             "betas": ([0.5, 0.9], None)
         },
         "wgan": {
-            "lr": (0.0001, None),
+            "lr": (0.00005, None),
             "c": (0.01, None)
         },
         "gan": {
