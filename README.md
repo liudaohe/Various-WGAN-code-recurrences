@@ -9,6 +9,8 @@ This repository contains PyTorch implementations of various WGAN (Wasserstein GA
 
 It should be noted that the original WGAN-GP paper processes each sample individually rather than in batches, but the official code seems to use batch processing, which may result in a training speed difference of about 10 times. This project uses the original individual processing, which is about 10 times slower than the other three.
 
+For learning and testing purposes only, not considered standard/formal, subject to updates at any time.
+
 ## Project Structure
 
 ```text
