@@ -109,7 +109,7 @@ def compute_fid_and_save_samples(G, device, real_temp_dir, samples_dir, iteratio
                 for j, img in enumerate(fake_imgs):
                     vutils.save_image(
                         img,
-                        f"{fake_temp_dir}/{n_gen + j}.png",
+                        f"{fake_temp_dir}/{n_gen}.png",
                         normalize=True,
                         value_range=(-1, 1)
                     )

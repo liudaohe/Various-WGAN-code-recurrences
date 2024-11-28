@@ -77,6 +77,7 @@ def train(args):
     os.makedirs(real_temp_dir, exist_ok=True)
 
     print("\n保存真实图像用于FID计算...")
+    num_r = 0
     for i, (real_imgs, _) in enumerate(dataloader):
         for j, img in enumerate(real_imgs):
             vutils.save_image(
@@ -85,7 +86,9 @@ def train(args):
                 normalize=True,
                 value_range=(-1, 1)
             )
-        if i * len(real_imgs) >= 5000:  # 保存足够的图像后停止
+            if num_r>=5000:
+                break
+        if num_r >= 5000:  # 保存足够的图像后停止
             break
 
     G_losses = []
